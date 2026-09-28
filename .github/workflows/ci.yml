@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend:
+    name: Backend build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install backend dependencies
+        working-directory: giftlink-backend
+        run: npm install
+
+      - name: Check backend syntax
+        working-directory: giftlink-backend
+        run: node --check app.js
+
+  sentiment:
+    name: Sentiment service build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install sentiment dependencies
+        working-directory: sentiment
+        run: npm install
+
+      - name: Check sentiment syntax
+        working-directory: sentiment
+        run: node --check index.js
+
+  frontend:
+    name: Frontend build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install frontend dependencies
+        working-directory: giftlink-frontend
+        run: npm install
+
+      - name: Build frontend
+        working-directory: giftlink-frontend
+        run: npm run build
+        env:
+          CI: false
