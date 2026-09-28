@@ -130,3 +130,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+submission_files/
+.env
+node_modules/
+submission_files/
+inserted_items
